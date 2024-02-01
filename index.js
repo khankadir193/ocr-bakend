@@ -1,14 +1,17 @@
 const express = require('express');
+const cors = require('cors');
 // const Tesseract = require('tesseract.js');
 const app = express();
 app.use(express.json());
 app.post('/perform-ocr',(req,res)=>{
+    const imgUrl = req.body.imgUrl;
+    
+    console.log('req.body....????',req.body);
+    console.log('imgUrl...??',imgUrl);
+    let recognitionText = "router is working properly.. OCR response..";  
 
-    console.log('message:ocr(optical recognition text)');
-
-    let recognitionText = "router is working properly....";  
-
-    res.json({"text":recognitionText}); 
+    res.header('Access-Control-Allow-Origin', '*');
+    return res.json({"text":`${recognitionText} imageURL ${imgUrl}`}); 
 });
 
 const  PORT = 3000;
