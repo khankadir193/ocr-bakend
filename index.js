@@ -3,15 +3,18 @@ const cors = require('cors');
 const axios = require('axios');
 // const Tesseract = require('tesseract.js');
 const app = express();
-app.use(express.json());
+//increased the limit of payload.
+app.use(express.json({limit:'50mb'}));
 app.post('/perform-ocr', async (req, res) => {
     // const imgUrl = req.body.imgUrl;
-    const ocrApi = "https://api.ocr.space/parse/imageurl?apikey=K89496159888957&url=https://hamariweb.com/poetry/images/Poetry/english-poetry-100696.png";
+    // const ocrApi = "https://api.ocr.space/parse/imageurl?apikey=K89496159888957&url=https://hamariweb.com/poetry/images/Poetry/english-poetry-100696.png";
 
     // let recognitionText = "router is working properly.. OCR response..";
     res.header('Access-Control-Allow-Origin', '*');
     // return res.json({ "text": `${recognitionText} imageURL ${imgUrl}` });
 
+    console.log('req...',req.body.url);
+    const ocrApi = `https://api.ocr.space/parse/imageurl?apikey=K89496159888957&url=${req.body.url}`;
     const response = await axios.get(ocrApi);
     console.log('response...????', response.data.ParsedResults[0].ParsedText);
 
